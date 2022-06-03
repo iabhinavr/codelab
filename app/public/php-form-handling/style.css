@@ -64,3 +64,23 @@ ul.errors {
 em {
     font-weight: bold;
 }
+.ideas {
+    margin: .5em 0;
+}
+.ideas h2 {
+    font-size: 1.15em;
+}
+.ideas h3 {
+    font-size: 1.125em;
+}
+.ideas ul {
+    list-style: none;
+    margin: .5em 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    column-gap: 5px;
+}
+.ideas ul li img {
+    display: block;
+    max-width: 100%;
+}

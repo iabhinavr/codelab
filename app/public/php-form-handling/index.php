@@ -34,6 +34,19 @@
                 <li>Message: <em><?= $data['message']?></em></li>
             </ul>
         </div>
+        <div class="ideas">
+            <h2>Here are some travel ideas:</h2>
+            <ul>
+                <?php include('destinations.php'); ?>
+                <?php foreach($destinations[$data['region']] as $d) : ?>
+                    <li>
+                        <a href="#"><img src="<?= $d[0] ?>" alt=""></a>
+                        <h3><?= $d[1] ?></h3>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+        
     <?php endif; ?>
     <form action="handle-form.php" method="post">
         <div class="field-group">
@@ -52,7 +65,7 @@
                 <option value="Africa">Africa</option>
                 <option value="Europe">Europe</option>
                 <option value="North America">North America</option>
-                <option value="South America">South America</option>
+                <option value="Latin America">Latin America</option>
             </select>
         </div>
         <div class="field-group">

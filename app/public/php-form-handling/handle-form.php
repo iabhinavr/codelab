@@ -36,7 +36,7 @@ else {
 
 if(!empty($_POST['region'])) {
     $region = $_POST['region'];
-    $regions = ["Asia", "Oceania", "Africa", "Europe", "North America", "South America"];
+    $regions = ["Asia", "Oceania", "Africa", "Europe", "North America", "Latin America"];
     if(!in_array($region, $regions)) {
         $errors[] = "Region not in list";
     }
