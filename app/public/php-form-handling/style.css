@@ -1,0 +1,66 @@
+html, body, ul, p, div, span, img, form, h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 720px;
+    margin: 0 auto;
+}
+h1 {
+    padding: .8em 0;
+    margin-bottom: .8em;
+    border-bottom: 1px solid #dcdcdc;
+}
+input[type="text"],
+input[type="email"],
+input[type="number"],
+select,
+textarea {
+    display: block;
+    width: 100%;
+    padding: .5em;
+}
+input[type="submit"] {
+    display: block;
+    padding: 1em 3em;
+    background: rgb(110, 105, 245);
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+.field-title {
+    display: block;
+    font-weight: bold;
+    margin-bottom: .5em;
+}
+textarea {
+    min-height: 10vh;
+}
+.field-group {
+    display: block;
+    margin-bottom: 1.25em;
+}
+
+ul.errors {
+    padding: 1em;
+    margin-bottom: 1.25em;
+    background:rgba(247, 112, 94, .2);
+    border: 1px solid rgba(247, 112, 94, .5);
+    list-style-position: inside;
+    border-radius: 3px;
+}
+.success {
+    padding: 1em;
+    margin-bottom: 1.25em;
+    background:rgba(143, 247, 94, 0.2);
+    border: 1px solid rgba(143, 247, 94, .5);
+    border-radius: 3px;
+}
+.success ul {
+    list-style-position: inside;
+    margin-top: .5em;
+}
+em {
+    font-weight: bold;
+}

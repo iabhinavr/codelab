@@ -1,0 +1,34 @@
+version: '3'
+services:
+    web:
+        image: nginx:latest
+        ports:
+            - "8081:80"
+        volumes:
+            - ./nginx.conf:/etc/nginx/conf.d/nginx.conf
+            - ./app:/app
+        depends_on:
+            - mysql
+        restart: always
+    php:
+        build:
+            context: .
+            dockerfile: PHP.Dockerfile
+        volumes:
+            - ./app:/app
+        restart: always
+    mysql:
+        image: mariadb:latest
+        environment:
+            MYSQL_ROOT_PASSWORD: 'password'
+            MYSQL_USER: 'abhinav'
+            MYSQL_PASSWORD: 'password'
+            MYSQL_DATABASE: 'tutorial'
+        volumes:
+            - codelab_data:/var/lib/mysql
+        ports:
+            - 3306:3306
+        restart: always
+volumes:
+    codelab_data: {}
+        
