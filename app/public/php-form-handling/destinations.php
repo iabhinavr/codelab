@@ -5,7 +5,7 @@ $destinations = [
         ["images/mt-everest.jpg", "Mt. Everest Trekking"],
         ["images/india-heritage.jpg", "Heritage India"],
         ["images/angkor.jpg", "Angkor Wat"],
-        ["codelab/app/public/php-form-handling/images/kerala.jpg", "Kerala Backwaters"]
+        ["images/kerala.jpg", "Kerala Backwaters"]
     ],
     "Oceania" => [
         ["images/polynesia.jpg", "French Polynesia", "Oceania"],
