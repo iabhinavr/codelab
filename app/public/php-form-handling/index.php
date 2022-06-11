@@ -1,4 +1,13 @@
-<?php session_start(); ?><!DOCTYPE html>
+<?php 
+
+session_start();
+
+$token = md5(uniqid(microtime(), true));
+$_SESSION['token'] = $token;
+
+include 'functions.php';
+
+?><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -25,13 +34,13 @@
             <p>Message sent successfully!</p>
             <p>Here are the details you entered:</p>
             <ul>
-                <li>Name: <em><?= $data['firstname']?></em></li>
-                <li>Email: <em><?= $data['email']?></em></li>
-                <li>Season: <em><?= $data['season']?></em></li>
-                <li>Region: <em><?= $data['region']?></em></li>
-                <li>Interests: <em><?php echo $data['interests']; ?></em></li>
-                <li>Participants: <em><?= $data['participants']?></em></li>
-                <li>Message: <em><?= $data['message']?></em></li>
+                <li>Name: <em><?= esc_str($data['firstname']) ?></em></li>
+                <li>Email: <em><?= esc_str($data['email'])?></em></li>
+                <li>Season: <em><?= esc_str($data['season'])?></em></li>
+                <li>Region: <em><?= esc_str($data['region'])?></em></li>
+                <li>Interests: <em><?= esc_str($data['interests']) ?></em></li>
+                <li>Participants: <em><?= esc_str($data['participants'])?></em></li>
+                <li>Message: <em><?= esc_str($data['message'])?></em></li>
             </ul>
         </div>
         <div class="ideas">
@@ -103,7 +112,7 @@
             <textarea name="message" id="message"></textarea>
         </div>
         <div class="field-group">
-            <input type="hidden" name="token" value="">
+            <input type="hidden" name="token" value="<?= $token ?>">
             <input type="submit" name="" value="Send">
         </div>      
     </form>

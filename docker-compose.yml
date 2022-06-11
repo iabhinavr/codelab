@@ -3,7 +3,7 @@ services:
     web:
         image: nginx:latest
         ports:
-            - "8081:80"
+            - "8000:80"
         volumes:
             - ./nginx.conf:/etc/nginx/conf.d/nginx.conf
             - ./app:/app
@@ -23,12 +23,12 @@ services:
             MYSQL_ROOT_PASSWORD: 'password'
             MYSQL_USER: 'abhinav'
             MYSQL_PASSWORD: 'password'
-            MYSQL_DATABASE: 'tutorial'
+            MYSQL_DATABASE: 'codelab'
         volumes:
-            - codelab_data:/var/lib/mysql
+            - codelab:/var/lib/mysql
         ports:
-            - 3306:3306
+            - "33060:3306"
         restart: always
 volumes:
-    codelab_data: {}
+    codelab: {}
         

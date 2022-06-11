@@ -13,6 +13,10 @@ $token = "";
 
 $errors = [];
 
+if(empty($_POST['token']) || $_POST['token'] != $_SESSION['token']) {
+    $errors[] = "Invalid token";
+}
+
 if(!empty($_POST['firstname'])) {
     $firstname = $_POST['firstname'];
     if(!ctype_alpha($firstname)) {
@@ -117,10 +121,23 @@ else {
 }
 
 function save_data($data) {
-    $connection = new PDO('mysql:dbname=travel;host=mysql', "root", "password", [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+    $connection = new PDO('mysql:dbname=codelab;host=mysql', "root", "password", [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+
+    $sql = "CREATE TABLE if not exists `form_submissions` (
+        `id` INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+        `firstname` VARCHAR(255),
+        `email` VARCHAR(255),
+        `region` VARCHAR(255),
+        `season` VARCHAR(255),
+        `interests` VARCHAR(255),
+        `participants` INT(11),
+        `message` TEXT
+    )";
+
+    $connection->exec($sql);
 
     try {
-        $stmt = $connection->prepare("INSERT INTO contacts (firstname, email, region, season, interests, participants, message) values (:firstname, :email, :region, :season, :interests, :participants, :message)");
+        $stmt = $connection->prepare("INSERT INTO form_submissions (firstname, email, region, season, interests, participants, message) values (:firstname, :email, :region, :season, :interests, :participants, :message)");
 
         $stmt->bindParam(':firstname', $data['firstname'], PDO::PARAM_STR);
         $stmt->bindParam(':email', $data['email'], PDO::PARAM_STR);
