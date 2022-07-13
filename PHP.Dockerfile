@@ -19,7 +19,8 @@ RUN docker-php-ext-install -j "$(nproc)" \
         exif \
         gd \
         intl \
-        zip
+        zip \ 
+        sockets
 
 RUN docker-php-ext-configure gd \
 		--with-freetype \

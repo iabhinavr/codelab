@@ -7,6 +7,7 @@ services:
         volumes:
             - ./nginx.conf:/etc/nginx/conf.d/nginx.conf
             - ./app:/app
+            - ./nginx-logs:/var/log/nginx
         depends_on:
             - mysql
         restart: always
