@@ -40,18 +40,26 @@ while(true) {
         unset($r[$firstIndex]);
     }
 
-    foreach ($r as $v) {
+    foreach ($r as $k => $v) { echo "inside for loop \n";
         $message = '';
-        if(socket_recv($v, $data, 1024, 0) >= 1){
+        $data = socket_read($v, 1024);
+        if($data){
             $message = unmask($data);
             if($message) {
-                echo $message;
+                echo $message . "\n";
                 $maskedMessage = mask($message);
-                for ($i = 1; $i < count($clients); $i++) {
-                    socket_write($clients[$i], $maskedMessage, strlen($maskedMessage));
+                foreach ($clients as $ck => $cv) {
+                    if($ck === 0) continue;
+                    socket_write($clients[$ck], $maskedMessage, strlen($maskedMessage));
                 }
             }
-        } 
+        }
+        else {
+            echo "disconnected \n";
+            $index = array_search($v, $clients); echo $index . "\n";
+            unset($clients[$index]);
+            socket_close($v);
+        }
     }
 
 }

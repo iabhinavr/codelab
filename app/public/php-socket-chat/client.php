@@ -13,7 +13,21 @@
     </form>
     
     <script>
-        let socket = new WebSocket("ws://codelab.local/php-socket");
+        let socket = new WebSocket("ws://codelab.local:8000/phpsock/");
+
+        var socketOpen = (e) => {
+            console.log("connected to the socket");
+            socket.send("This is me, the browser");
+        }
+
+        var socketMessage = (e) => {
+            console.log(`Message from socket: ${e.data}`);
+        }
+
+        socket.addEventListener("open", socketOpen);
+        socket.addEventListener("message", socketMessage);
+
+        
     </script>
     
 </body>
