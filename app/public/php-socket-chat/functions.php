@@ -10,7 +10,7 @@ function unmask($text) {
     return $text;
 }
 
-function mask($text) {
+function pack_data($text) {
     $b1 = 0x80 | (0x1 & 0x0f);
     $length = strlen($text);
     if($length <= 125)

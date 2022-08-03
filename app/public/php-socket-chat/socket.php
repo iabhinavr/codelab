@@ -33,7 +33,7 @@ while(true) {
         $clients[] = $newclient;
     
         $first_reply = "Hello, Welcome to the chat server!" . "\n";
-        $first_reply = mask($first_reply);
+        $first_reply = pack_data($first_reply);
         socket_write($newclient, $first_reply, strlen($first_reply));
 
         $firstIndex = array_search($sock, $r);
@@ -47,7 +47,7 @@ while(true) {
             $message = unmask($data);
             if($message) {
                 echo $message . "\n";
-                $maskedMessage = mask($message);
+                $maskedMessage = pack_data($message);
                 foreach ($clients as $ck => $cv) {
                     if($ck === 0) continue;
                     socket_write($clients[$ck], $maskedMessage, strlen($maskedMessage));

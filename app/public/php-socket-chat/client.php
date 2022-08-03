@@ -24,8 +24,24 @@
             console.log(`Message from socket: ${e.data}`);
         }
 
+        var socketClose = (e) => {
+            if(e.wasClean) {
+                console.log("The connection closed cleanly");
+            }
+            else {
+                console.log("The connection closed for some reason");
+            }
+        }
+        
+        var socketError = (e) => {
+            console.log("WebSocket Error");
+            console.log(e);
+        }
+
         socket.addEventListener("open", socketOpen);
         socket.addEventListener("message", socketMessage);
+        socket.addEventListener("close", socketClose);
+        socket.addEventListener("error", socketError);
 
         
     </script>
