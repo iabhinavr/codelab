@@ -1,39 +1,4 @@
 (function(){
-    let socket = new WebSocket("ws://codelab.local:8000/phpsock/");
-
-    var socketOpen = (e) => {
-        console.log("connected to the socket");
-        var openMsg = {
-            name: "browser",
-            text: "This is me, the browser"
-        };
-        socket.send(JSON.stringify(openMsg));
-    }
-
-    var socketMessage = (e) => {
-        console.log(`Message from socket: ${e.data}`);
-        appendMessage(e.data);
-    }
-
-    var socketClose = (e) => {
-        if(e.wasClean) {
-            console.log("The connection closed cleanly");
-        }
-        else {
-            console.log("The connection closed for some reason");
-        }
-    }
-    
-    var socketError = (e) => {
-        console.log("WebSocket Error");
-        console.log(e);
-    }
-
-    socket.addEventListener("open", socketOpen);
-    socket.addEventListener("message", socketMessage);
-    socket.addEventListener("close", socketClose);
-    socket.addEventListener("error", socketError);
-
     function sendMessage(message) {
         socket.send(message);
     }
@@ -71,40 +36,78 @@
         }
         return msg;
     }
+
+    function setup() {
+        var name = '';
+        var joinForm = document.querySelector('form.join-form');
+        console.log(joinForm);
+        var msgForm = document.querySelector('form.msg-form');
     
-    var name = '';
-    var joinForm = document.querySelector('form.join-form');
-    console.log(joinForm);
-    var msgForm = document.querySelector('form.msg-form');
-
-    function joinFormSubmit(event) {
-        event.preventDefault();
-        name = document.getElementById('fname').value;
-        var joinMsg = {
-            name: "server",
-            text: name + ' joined the chat!'
-        };
-        sendMessage(JSON.stringify(joinMsg));
-        joinForm.classList.add('hidden');
-        msgForm.classList.remove('hidden');
+        function joinFormSubmit(event) {
+            event.preventDefault();
+            name = document.getElementById('fname').value;
+            var joinMsg = {
+                name: "server",
+                text: name + ' joined the chat!'
+            };
+            sendMessage(JSON.stringify(joinMsg));
+            joinForm.classList.add('hidden');
+            msgForm.classList.remove('hidden');
+        }
+    
+        joinForm.addEventListener('submit', joinFormSubmit);
+    
+        function msgFormSubmit(event) {
+            event.preventDefault();
+            var msgField, msgText, msg;
+            msgField = document.getElementById('msg');
+            msgText = msgField.value;
+            msg = {
+                name: name,
+                text: msgText
+            };
+            msg = JSON.stringify(msg);
+            sendMessage(msg);
+            msgField.value = '';
+        }
+    
+        msgForm.addEventListener('submit', msgFormSubmit);
     }
 
-    joinForm.addEventListener('submit', joinFormSubmit);
+    let socket = new WebSocket("ws://codelab.local:8000/phpsock/");
 
-    function msgFormSubmit(event) {
-        event.preventDefault();
-        var msgField, msgText, msg;
-        msgField = document.getElementById('msg');
-        msgText = msgField.value;
-        msg = {
-            name: name,
-            text: msgText
+    var socketOpen = (e) => {
+        console.log("connected to the socket");
+        var openMsg = {
+            name: "browser",
+            text: "This is me, the browser"
         };
-        msg = JSON.stringify(msg);
-        sendMessage(msg);
-        msgField.value = '';
+        socket.send(JSON.stringify(openMsg));
+        setup();
     }
 
-    msgForm.addEventListener('submit', msgFormSubmit);
+    var socketMessage = (e) => {
+        console.log(`Message from socket: ${e.data}`);
+        appendMessage(e.data);
+    }
+
+    var socketClose = (e) => {
+        if(e.wasClean) {
+            console.log("The connection closed cleanly");
+        }
+        else {
+            console.log("The connection closed for some reason");
+        }
+    }
+    
+    var socketError = (e) => {
+        console.log("WebSocket Error");
+        console.log(e);
+    }
+
+    socket.addEventListener("open", socketOpen);
+    socket.addEventListener("message", socketMessage);
+    socket.addEventListener("close", socketClose);
+    socket.addEventListener("error", socketError);
    
 })();

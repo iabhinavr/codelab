@@ -1,6 +1,6 @@
 <?php
 
-$address = '127.0.0.1';
+$address = '0.0.0.0';
 $port = 8060;
 $null = NULL;
 
@@ -8,7 +8,7 @@ include 'functions.php';
 
 $sock = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
 socket_set_option($sock, SOL_SOCKET, SO_REUSEADDR, 1);
-socket_bind($sock, 0, $port);
+socket_bind($sock, $address, $port);
 socket_listen($sock);
 
 
@@ -19,28 +19,22 @@ echo "Listening for new connections on port $port: " . "\n";
 
 while(true) {
 
-    $r = $w = $e = $clients;
-    socket_select($r, $w, $e, 0);
+    $reads = $writes = $exceptions = $clients;
+    socket_select($reads, $writes, $exceptions, 0);
 
-    if(in_array($sock, $r)) {
-
+    if(in_array($sock, $reads)) {
         $newclient = socket_accept($sock);
-
-        $header = socket_read($newclient, 1024); 
-    
-        wshandshake($header, $newclient, $address, $port);
-
-        $clients[] = $newclient;
-    
+        $header = socket_read($newclient, 1024);     
+        handshake($header, $newclient, $address, $port);
+        $clients[] = $newclient;   
         $first_reply = "Hello, Welcome to the chat server!" . "\n";
         $first_reply = pack_data($first_reply);
         socket_write($newclient, $first_reply, strlen($first_reply));
-
-        $firstIndex = array_search($sock, $r);
-        unset($r[$firstIndex]);
+        $firstIndex = array_search($sock, $reads);
+        unset($reads[$firstIndex]);
     }
 
-    foreach ($r as $k => $v) { echo count($r) . "\n";
+    foreach ($reads as $k => $v) { echo count($reads) . "\n";
 
         $bytes = socket_recv($v, $data, 1024, 0);
         if($bytes > 0) {
@@ -58,7 +52,7 @@ while(true) {
             break;
         }
             
-        $check = socket_read($v, 1024, PHP_NORMAL_READ);
+        $check = @socket_read($v, 1024, PHP_NORMAL_READ);
         if($check === false)  {
             echo "disconnected " . $k . " \n";
             $index = array_search($v, $clients); echo $index . "\n";

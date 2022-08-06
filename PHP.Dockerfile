@@ -32,6 +32,8 @@ RUN pecl install xdebug && docker-php-ext-enable xdebug
 
 RUN pecl install imagick-3.7.0 && docker-php-ext-enable imagick
 
+RUN pecl install openswoole-4.11.1 && docker-php-ext-enable openswoole
+
 RUN set -eux; \
 	docker-php-ext-enable opcache; \
 	{ \

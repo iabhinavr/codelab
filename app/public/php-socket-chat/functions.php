@@ -22,7 +22,7 @@ function pack_data($text) {
     return $header.$text;
 }
 
-function wshandshake($requestHeader,$sock, $host_name, $port) {
+function handshake($requestHeader,$sock, $host_name, $port) {
 	$headers = array();
 	$lines = preg_split("/\r\n/", $requestHeader);
 	foreach($lines as $line)
