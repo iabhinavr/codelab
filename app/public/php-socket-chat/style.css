@@ -8,13 +8,16 @@
     align-items: center;
 }
 .chat-container {
+    position: relative;
+}
+
+.messages {
+    height: 300px;
     width: 500px;
-    height:300px;
     border: 2px solid #ccc;
     border-radius: 3px;
     padding: 1em;
-    position: relative;
-    overflow-y: scroll;
+    overflow: scroll;
 }
 
 input {
@@ -37,7 +40,6 @@ button {
     color: white;
 }
 form.msg-form {
-    position: absolute;
     bottom: 1em;
     right: 1em;
     left: 1em;

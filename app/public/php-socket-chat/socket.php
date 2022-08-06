@@ -20,7 +20,7 @@ echo "Listening for new connections on port $port: " . "\n";
 while(true) {
 
     $r = $w = $e = $clients;
-    socket_select($r, $w, $e, 0, 10);
+    socket_select($r, $w, $e, 0);
 
     if(in_array($sock, $r)) {
 
@@ -40,22 +40,27 @@ while(true) {
         unset($r[$firstIndex]);
     }
 
-    foreach ($r as $k => $v) { echo "inside for loop \n";
-        $message = '';
-        $data = socket_read($v, 1024);
-        if($data){
+    foreach ($r as $k => $v) { echo count($r) . "\n";
+
+        $bytes = socket_recv($v, $data, 1024, 0);
+        if($bytes > 0) {
             $message = unmask($data);
-            if($message) {
-                echo $message . "\n";
-                $maskedMessage = pack_data($message);
-                foreach ($clients as $ck => $cv) {
-                    if($ck === 0) continue;
-                    socket_write($clients[$ck], $maskedMessage, strlen($maskedMessage));
+            $decoded_message = json_decode($message, true);
+            if ($decoded_message) {
+                if(isset($decoded_message['name']) && isset($decoded_message['text'])){
+                    $maskedMessage = pack_data(json_encode($decoded_message));
+                    foreach ($clients as $ck => $cv) {
+                        if($ck === 0) continue;
+                        socket_write($cv, $maskedMessage, strlen($maskedMessage));
+                    }
                 }
             }
+            break;
         }
-        else {
-            echo "disconnected \n";
+            
+        $check = socket_read($v, 1024, PHP_NORMAL_READ);
+        if($check === false)  {
+            echo "disconnected " . $k . " \n";
             $index = array_search($v, $clients); echo $index . "\n";
             unset($clients[$index]);
             socket_close($v);
