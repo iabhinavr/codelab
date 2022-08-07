@@ -28,7 +28,7 @@ services:
         volumes:
             - codelab:/var/lib/mysql
         ports:
-            - "33060:3306"
+            - "33070:3306"
         restart: always
 volumes:
     codelab: {}

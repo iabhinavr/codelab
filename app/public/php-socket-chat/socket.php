@@ -26,36 +26,38 @@ while(true) {
         $newclient = socket_accept($sock);
         $header = socket_read($newclient, 1024);     
         handshake($header, $newclient, $address, $port);
-        $clients[] = $newclient;   
-        $first_reply = "Hello, Welcome to the chat server!" . "\n";
-        $first_reply = pack_data($first_reply);
-        socket_write($newclient, $first_reply, strlen($first_reply));
+        $clients[] = $newclient;
+        $reply = [
+            "name" => "Server",
+            "text" => "enter name to join... \n"
+        ];
+        $reply = pack_data(json_encode($reply));
+        socket_write($newclient, $reply, strlen($reply));
         $firstIndex = array_search($sock, $reads);
         unset($reads[$firstIndex]);
     }
 
-    foreach ($reads as $k => $v) { echo count($reads) . "\n";
+    foreach ($reads as $k => $v) {
 
-        $bytes = socket_recv($v, $data, 1024, 0);
-        if($bytes > 0) {
+        $data = @socket_read($v, 1024);
+
+        if(!empty($data)) {
             $message = unmask($data);
             $decoded_message = json_decode($message, true);
             if ($decoded_message) {
                 if(isset($decoded_message['name']) && isset($decoded_message['text'])){
-                    $maskedMessage = pack_data(json_encode($decoded_message));
+                    $maskedMessage = pack_data($message);
                     foreach ($clients as $ck => $cv) {
                         if($ck === 0) continue;
                         socket_write($cv, $maskedMessage, strlen($maskedMessage));
                     }
                 }
             }
-            break;
         }
-            
-        $check = @socket_read($v, 1024, PHP_NORMAL_READ);
-        if($check === false)  {
+
+        else if($data === '')  {
             echo "disconnected " . $k . " \n";
-            $index = array_search($v, $clients); echo $index . "\n";
+            $index = array_search($v, $clients);
             unset($clients[$index]);
             socket_close($v);
         }

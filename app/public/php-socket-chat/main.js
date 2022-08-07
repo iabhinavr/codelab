@@ -78,11 +78,6 @@
 
     var socketOpen = (e) => {
         console.log("connected to the socket");
-        var openMsg = {
-            name: "browser",
-            text: "This is me, the browser"
-        };
-        socket.send(JSON.stringify(openMsg));
         setup();
     }
 
