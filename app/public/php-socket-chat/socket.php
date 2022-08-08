@@ -28,7 +28,7 @@ while(true) {
         handshake($header, $new_connection, $address, $port);
         $connections[] = $new_connection;
         $reply = [
-            "type" => "notification",
+            "type" => "join",
             "sender" => "Server",
             "text" => "enter name to join... \n"
         ];
@@ -38,9 +38,9 @@ while(true) {
         unset($reads[$firstIndex]);
     }
 
-    foreach ($reads as $k => $v) {
+    foreach ($reads as $key => $value) {
 
-        $data = socket_read($v, 1024);
+        $data = socket_read($value, 1024);
 
         if(!empty($data)) {
             $message = unmask($data);
@@ -48,37 +48,36 @@ while(true) {
             if ($decoded_message) {
                 if(isset($decoded_message['text'])){
                     if($decoded_message['type'] === 'join') {
-                        $members[$k] = [
+                        $members[$key] = [
                             'name' => $decoded_message['sender'],
-                            'connection' => $v
+                            'connection' => $value
                         ];
                     }
                     $maskedMessage = pack_data($message);
-                    foreach ($members as $mk => $mv) {
-                        socket_write($mv['connection'], $maskedMessage, strlen($maskedMessage));
+                    foreach ($members as $mkey => $mvalue) {
+                        socket_write($mvalue['connection'], $maskedMessage, strlen($maskedMessage));
                     }
                 }
             }
         }
 
         else if($data === '')  {
-            echo "disconnected " . $k . " \n";
-            // $index = array_search($v, $connections);
-            unset($connections[$k]);
-            if(array_key_exists($k, $members)) {
+            echo "disconnected " . $key . " \n";
+            unset($connections[$key]);
+            if(array_key_exists($key, $members)) {
                 
                 $message = [
                     "type" => "left",
-                    "sender" => "system",
-                    "text" => $members[$k]['name'] . " left the chat \n"
+                    "sender" => "Server",
+                    "text" => $members[$key]['name'] . " left the chat \n"
                 ];
                 $maskedMessage = pack_data(json_encode($message));
-                unset($members[$k]);
-                foreach ($members as $mk => $mv) {
-                    socket_write($mv['connection'], $maskedMessage, strlen($maskedMessage));
+                unset($members[$key]);
+                foreach ($members as $mkey => $mvalue) {
+                    socket_write($mvalue['connection'], $maskedMessage, strlen($maskedMessage));
                 }
             }
-            socket_close($v);
+            socket_close($value);
         }
     }
 

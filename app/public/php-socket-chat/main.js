@@ -93,6 +93,12 @@
 
     var socketOpen = (e) => {
         console.log("connected to the socket");
+        var msg = {
+            type: 'join',
+            sender: 'Browser',
+            text: 'connected to the chat server'
+        }
+        appendMessage(JSON.stringify(msg));
         setup();
     }
 
@@ -102,12 +108,24 @@
     }
 
     var socketClose = (e) => {
+        var msg;
         if(e.wasClean) {
             console.log("The connection closed cleanly");
+            msg = {
+                type: 'left',
+                sender: 'Browser',
+                text: 'The connection closed cleanly'
+            }
         }
         else {
             console.log("The connection closed for some reason");
+            var msg = {
+                type: 'left',
+                sender: 'Browser',
+                text: 'The connection closed for some reason'
+            }
         }
+        appendMessage(JSON.stringify(msg));
     }
     
     var socketError = (e) => {

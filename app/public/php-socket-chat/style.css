@@ -52,13 +52,12 @@ form.msg-form {
     margin-bottom: 5px;
 }
 .msg-text {
-    display: inline-block;
-}
-.msg-normal .msg-text {
     padding: 5px;
     display: inline-block;
-    background:rgb(39, 112, 215);
     border-radius: 5px;
+}
+.msg-normal .msg-text {
+    background:rgb(39, 112, 215);
     color: white;
 }
 
@@ -67,8 +66,6 @@ form.msg-form {
 .msg-left .msg-text {
     background: #eee;
     border: 1px solid #ccc;
-    border-radius: 3px;
-    padding: 5px;
 }
 
 .msg-notification .msg-sender,
