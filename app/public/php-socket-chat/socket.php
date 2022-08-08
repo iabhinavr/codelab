@@ -11,45 +11,51 @@ socket_set_option($sock, SOL_SOCKET, SO_REUSEADDR, 1);
 socket_bind($sock, $address, $port);
 socket_listen($sock);
 
-
-$clients = [];
-$clients[] = $sock;
+$members = [];
+$connections = [];
+$connections[] = $sock;
 
 echo "Listening for new connections on port $port: " . "\n";
 
 while(true) {
 
-    $reads = $writes = $exceptions = $clients;
+    $reads = $writes = $exceptions = $connections;
     socket_select($reads, $writes, $exceptions, 0);
 
     if(in_array($sock, $reads)) {
-        $newclient = socket_accept($sock);
-        $header = socket_read($newclient, 1024);     
-        handshake($header, $newclient, $address, $port);
-        $clients[] = $newclient;
+        $new_connection = socket_accept($sock);
+        $header = socket_read($new_connection, 1024);     
+        handshake($header, $new_connection, $address, $port);
+        $connections[] = $new_connection;
         $reply = [
-            "name" => "Server",
+            "type" => "notification",
+            "sender" => "Server",
             "text" => "enter name to join... \n"
         ];
         $reply = pack_data(json_encode($reply));
-        socket_write($newclient, $reply, strlen($reply));
+        socket_write($new_connection, $reply, strlen($reply));
         $firstIndex = array_search($sock, $reads);
         unset($reads[$firstIndex]);
     }
 
     foreach ($reads as $k => $v) {
 
-        $data = @socket_read($v, 1024);
+        $data = socket_read($v, 1024);
 
         if(!empty($data)) {
             $message = unmask($data);
             $decoded_message = json_decode($message, true);
             if ($decoded_message) {
-                if(isset($decoded_message['name']) && isset($decoded_message['text'])){
+                if(isset($decoded_message['text'])){
+                    if($decoded_message['type'] === 'join') {
+                        $members[$k] = [
+                            'name' => $decoded_message['sender'],
+                            'connection' => $v
+                        ];
+                    }
                     $maskedMessage = pack_data($message);
-                    foreach ($clients as $ck => $cv) {
-                        if($ck === 0) continue;
-                        socket_write($cv, $maskedMessage, strlen($maskedMessage));
+                    foreach ($members as $mk => $mv) {
+                        socket_write($mv['connection'], $maskedMessage, strlen($maskedMessage));
                     }
                 }
             }
@@ -57,8 +63,21 @@ while(true) {
 
         else if($data === '')  {
             echo "disconnected " . $k . " \n";
-            $index = array_search($v, $clients);
-            unset($clients[$index]);
+            // $index = array_search($v, $connections);
+            unset($connections[$k]);
+            if(array_key_exists($k, $members)) {
+                
+                $message = [
+                    "type" => "left",
+                    "sender" => "system",
+                    "text" => $members[$k]['name'] . " left the chat \n"
+                ];
+                $maskedMessage = pack_data(json_encode($message));
+                unset($members[$k]);
+                foreach ($members as $mk => $mv) {
+                    socket_write($mv['connection'], $maskedMessage, strlen($maskedMessage));
+                }
+            }
             socket_close($v);
         }
     }

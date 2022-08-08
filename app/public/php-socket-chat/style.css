@@ -52,9 +52,27 @@ form.msg-form {
     margin-bottom: 5px;
 }
 .msg-text {
+    display: inline-block;
+}
+.msg-normal .msg-text {
     padding: 5px;
     display: inline-block;
     background:rgb(39, 112, 215);
     border-radius: 5px;
     color: white;
+}
+
+.msg-notification .msg-text,
+.msg-join .msg-text,
+.msg-left .msg-text {
+    background: #eee;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 5px;
+}
+
+.msg-notification .msg-sender,
+.msg-join .msg-sender, 
+.msg-left .msg-sender {
+    display: none;
 }

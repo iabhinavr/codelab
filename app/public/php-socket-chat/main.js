@@ -3,31 +3,8 @@
         socket.send(message);
     }
 
-    function appendMessage(message) {
-        
-        var parsedMsg;
-        var msgContainer = document.querySelector(".messages");
-        if (parsedMsg = parseMessage(message)) {
-            console.log('appending message');
-            console.log(parsedMsg);
-            var newMsg = document.createElement("div");
-            newMsg.classList.add("msg");
-            var nameSpan = document.createElement("span");
-            nameSpan.classList.add("msg-name");
-            var name = document.createTextNode(parsedMsg.name + ': ');
-            nameSpan.appendChild(name);
-            var textSpan = document.createElement("span");
-            textSpan.classList.add("msg-text");
-            var text = document.createTextNode(parsedMsg.text);
-            textSpan.appendChild(text);
-            newMsg.appendChild(nameSpan);
-            newMsg.appendChild(textSpan);
-            msgContainer.appendChild(newMsg);
-        }
-    }
-
     function parseMessage(message) {
-        var msg = {name: "", text: ""};
+        var msg = {sender: "", text: ""};
         try {
             msg = JSON.parse(message);
         }
@@ -37,18 +14,55 @@
         return msg;
     }
 
+    function appendMessage(message) {
+        
+        var parsedMsg;
+        var msgContainer = document.querySelector(".messages");
+        if (parsedMsg = parseMessage(message)) {
+            console.log('appending message');
+            console.log(parsedMsg);
+
+            var msgElem, senderElem, textElem;
+            var sender, text;
+
+            msgElem = document.createElement("div");
+            msgElem.classList.add('msg');
+            msgElem.classList.add('msg-' + parsedMsg.type);
+
+            senderElem = document.createElement("span");
+            senderElem.classList.add("msg-sender");
+
+            textElem = document.createElement("span");
+            textElem.classList.add("msg-text");
+
+            sender = document.createTextNode(parsedMsg.sender + ': ');
+            text = document.createTextNode(parsedMsg.text);
+
+            console.log(sender);
+            
+            senderElem.appendChild(sender);
+            textElem.appendChild(text);
+
+            msgElem.appendChild(senderElem);
+            msgElem.appendChild(textElem);
+
+            msgContainer.appendChild(msgElem);
+        }
+    }
+
     function setup() {
-        var name = '';
+        var sender = '';
         var joinForm = document.querySelector('form.join-form');
         console.log(joinForm);
         var msgForm = document.querySelector('form.msg-form');
     
         function joinFormSubmit(event) {
             event.preventDefault();
-            name = document.getElementById('fname').value;
+            sender = document.getElementById('sender').value;
             var joinMsg = {
-                name: "server",
-                text: name + ' joined the chat!'
+                type: "join",
+                sender: sender,
+                text: sender + ' joined the chat!'
             };
             sendMessage(JSON.stringify(joinMsg));
             joinForm.classList.add('hidden');
@@ -63,7 +77,8 @@
             msgField = document.getElementById('msg');
             msgText = msgField.value;
             msg = {
-                name: name,
+                type: "normal",
+                sender: sender,
                 text: msgText
             };
             msg = JSON.stringify(msg);

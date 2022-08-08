@@ -12,7 +12,7 @@
         <div class="chat-box">
             <div class="messages"></div>
             <form action="" class="join-form">
-                <input type="text" name="name" id="fname" placeholder="Enter name">
+                <input type="text" name="sender" id="sender" placeholder="Enter name">
                 <button type="submit">Join Chat</button>
             </form>
             <form action="" method="post" class="msg-form hidden">
