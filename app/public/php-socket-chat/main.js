@@ -98,7 +98,7 @@
         closeForm.addEventListener('submit', closeFormSubmit);
     }
 
-    let socket = new WebSocket("ws://codelab.local:8000/phpsock/");
+    let socket = new WebSocket("ws://codelab.local:9500");
 
     var socketOpen = (e) => {
         console.log("connected to the socket");
