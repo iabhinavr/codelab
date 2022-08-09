@@ -44,6 +44,12 @@ form.msg-form {
     right: 1em;
     left: 1em;
 }
+form.close-form button {
+    background: transparent;
+    border: 1px solid rgb(237, 102, 102);
+    color: black;
+    border-radius: 5px;
+}
 .hidden {
     display: none;
 }

@@ -19,6 +19,9 @@
                 <input type="text" name="msg" id="msg" placeholder="Write message">
                 <button type="submit">Send</button>
             </form>
+            <form action="" class="close-form hidden"> 
+                <button type="submit">End Chat</button>
+            </form>
         </div>
     </div>
     <script src="main.js"></script>

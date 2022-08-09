@@ -53,8 +53,8 @@
     function setup() {
         var sender = '';
         var joinForm = document.querySelector('form.join-form');
-        console.log(joinForm);
         var msgForm = document.querySelector('form.msg-form');
+        var closeForm = document.querySelector('form.close-form');
     
         function joinFormSubmit(event) {
             event.preventDefault();
@@ -67,6 +67,7 @@
             sendMessage(JSON.stringify(joinMsg));
             joinForm.classList.add('hidden');
             msgForm.classList.remove('hidden');
+            closeForm.classList.remove('hidden');
         }
     
         joinForm.addEventListener('submit', joinFormSubmit);
@@ -87,6 +88,14 @@
         }
     
         msgForm.addEventListener('submit', msgFormSubmit);
+
+        function closeFormSubmit(event) {
+            event.preventDefault();
+            socket.close();
+            window.location.reload();
+        }
+
+        closeForm.addEventListener('submit', closeFormSubmit);
     }
 
     let socket = new WebSocket("ws://codelab.local:8000/phpsock/");
