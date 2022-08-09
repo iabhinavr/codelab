@@ -4,7 +4,7 @@
     }
 
     function parseMessage(message) {
-        var msg = {sender: "", text: ""};
+        var msg = {type: "", sender: "", text: ""};
         try {
             msg = JSON.parse(message);
         }
