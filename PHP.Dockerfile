@@ -44,3 +44,7 @@ RUN set -eux; \
 		echo 'opcache.fast_shutdown=1'; \
 	} > /usr/local/etc/php/conf.d/opcache-recommended.ini
 
+RUN adduser abhinav
+USER abhinav
+
+CMD ["php-fpm"]
