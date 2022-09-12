@@ -9,16 +9,17 @@ In this video:
 - return
 */
 
-// let's take a simple example, print a message
+// functions are reusable blocks of code, makes the program efficient
 
+// let's take a simple example, printing a message
 
-$msg = "Let's learn PHP";
 
 function printMsg($msg) {
     $msg = "Hello, $msg <br>";
     print $msg;
 }
 
+$msg = "Let's learn PHP";
 printMsg($msg);
 
 
