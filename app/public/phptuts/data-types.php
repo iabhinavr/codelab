@@ -8,6 +8,16 @@ var_dump($check);
 echo gettype($check);
 echo '<br>';
 
+$name = "Muruga";
+
+if($isNameEmpty = empty($name)) {
+    echo "Name cannot be empty.<br>";
+}
+else {
+    echo "The name you've given is $name. <br>";
+}
+var_dump($isNameEmpty);
+
 // 2. Integers 
 
 /*
@@ -28,7 +38,6 @@ var_dump($score1 + $score2);
 $average = ($score1+$score2)/2;
 var_dump($average);
 var_dump((int)$average);
-
 
 
 // 4. Strings
@@ -82,6 +91,7 @@ echo $codeBlock;
 $fruits = array("apple", "orange", "mango");
 
 var_dump($fruits);
+var_dump($fruits[1]);
 
 $fruit = array(
     "name" => "apple",
@@ -89,6 +99,8 @@ $fruit = array(
 ); // associative array
 
 var_dump($fruit);
+
+echo $fruit["name"] . " is " . $fruit["color"] . " in color";
 
 $fruit = [
     "name" => "mango",
@@ -131,6 +143,7 @@ function getFruits(iterable $iterable) {
     }
 }
 
+// $fruits = "apple, orange, mango";
 getFruits($fruits);
 
 // 8. Callable
