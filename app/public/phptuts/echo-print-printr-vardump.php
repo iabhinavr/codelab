@@ -6,12 +6,16 @@
 - echo can accept multiple parameters, separated by commas
 */
 
-echo "Hello World! 
-Welcome to PHP";
+echo "Hello World! Welcome to PHP";
 
 echo "<br>";
 
 echo "Hello ", "World ", "! ", "Welcome ", "to ", "PHP ";
+echo "<br>";
+
+$a = 8; $b = 17;
+
+echo "Average of ", $a, " and ", $b, " is: ", ($a+$b)/2;
 
 echo "<br>";
 
@@ -54,7 +58,7 @@ $fruit = [
     "color" => "red"
 ];
 
-$result = print_r($fruit, true);
+$result = "<pre>" . print_r($fruit, true) . "</pre>";
 
 print_r($result);
 
@@ -68,7 +72,8 @@ print_r($result);
 
 $fruit = [
     "name" => "apple",
-    "color" => "red"
+    "color" => "red",
+    "weight" => 150
 ];
 
 var_dump("hello", 5, $fruit);
