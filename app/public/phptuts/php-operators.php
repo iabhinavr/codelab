@@ -61,6 +61,12 @@ var_dump($a <=> $b); // returns 1
 var_dump($b <=> $a); // returns -1
 var_dump($a <=> $a); // returns 0
 
+// ternary operator
+
+$result = ($a > $b) ? "a is larger" : "b is larger";
+echo $result, "<br>";
+$larger = ($a > $b) ? $a : $b;
+
 // 4. Increment / Decrement Operators
 
 $a = 1;
@@ -119,7 +125,25 @@ var_dump($allFruits);
 
 // 8. Bitwise Operators
 
+/* compares the bits in two operands
+54 = 110110, 
+40 = 101000,
+so,
+54 & 40 = 100000 (32)
+
+54 | 45 = 111110 (62)
+*/
+
+$a = 54; $b = 40;
+echo ($a & $b), "<br>";
+echo ($a | $b), "<br>";
+
 // Operator precedence
 
-// Unary and binary operators
+echo 20/2*2, "<br>"; // 20 or 5
+echo 125/5**2, "<br>"; // 625 or 5
+echo 12*6%4, "<br>"; // 0 or 24
+echo 12+6%4, "<br>"; // 0 or 14
+
+// the precedence order is:  **, /, *, %, +, -;
 
