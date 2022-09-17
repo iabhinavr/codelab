@@ -8,7 +8,7 @@ var_dump($check);
 echo gettype($check);
 echo '<br>';
 
-$name = "Muruga";
+$name = "Joe";
 
 if($isNameEmpty = empty($name)) {
     echo "Name cannot be empty.<br>";

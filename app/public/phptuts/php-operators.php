@@ -28,7 +28,7 @@ $z = 2;
 
 $z = $x; // assigns the value of $x to $z, now $z = 4
 
-$x += $y; // means $x = $x +$y
+$x += $y; // means $x = $x + $y
 echo $x;
 
 // 3. Comparison Operators
@@ -96,7 +96,7 @@ var_dump(!$x);
 $str1 = "Hello ";
 $str2 = "World";
 
-$str1 .= $str2; //means $str1 = $str1 . $str2 - concatenation
+$str1 .= $str2; // means $str1 = $str1 . $str2 - concatenation
 
 // 7. Array Operators
 
