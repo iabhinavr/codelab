@@ -3,20 +3,14 @@
 // Let's look at the frequently used ones
 
 /*
-if
-else
-elseif / else if
-while
-do-while
-for
-foreach
+if, else, elseif / else if
+while, do-while
+for, foreach
 switch
 break
 return
-include
-include_once
-require
-require_once
+include, include_once
+require, require_once
 */
 
 // if, else, elseif, else if
@@ -24,7 +18,8 @@ require_once
 $score = 400;
 
 if($score >= 1000) {
-    echo "Wow! You've earned a golden badge";
+    $message = "Wow! You've earned a golden badge";
+    echo $message, "<br>";
 }
 elseif ($score < 1000 && $score >= 500) {
     echo "Great! You've earned a silver badge";
@@ -124,7 +119,14 @@ for ($i = 0; $i <= $target; $i++) {
 
 echo "<br>";
 
-// foreach - used to iterate arrays
+$cars = ["Audi", "Toyota", "Tata", "Ford"];
+
+for($i=0; $i<count($cars); $i++) {
+    echo $cars[$i], " ";
+}
+echo "<br>";
+
+// foreach - used to iterate arrays and objects
 
 $carDetails = [
     "color" => "blue",

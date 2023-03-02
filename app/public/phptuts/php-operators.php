@@ -28,7 +28,7 @@ $z = 2;
 
 $z = $x; // assigns the value of $x to $z, now $z = 4
 
-$x += $y; // means $x = $x + $y
+$x += 5; // means $x = $x + 5
 echo $x;
 
 // 3. Comparison Operators
@@ -36,8 +36,11 @@ echo $x;
 $a = true;
 $b = 1;
 
-$c = ($a == $b); // true because of (boolean) 1 = true
-var_dump($c);
+var_dump((boolean)0);
+
+var_dump($a == $b); // true because of (boolean) 1 = true
+var_dump($a === $b); // false because the data type are different
+
 
 /*
 so, the operators are:
@@ -57,6 +60,8 @@ $b = 6;
 
 var_dump($a > $b); // returns true
 
+// spaceship oparator
+
 var_dump($a <=> $b); // returns 1
 var_dump($b <=> $a); // returns -1
 var_dump($a <=> $a); // returns 0
@@ -68,6 +73,9 @@ echo $result, "<br>";
 $larger = ($a > $b) ? $a : $b;
 
 // 4. Increment / Decrement Operators
+
+$b = "B";
+var_dump(--$b);
 
 $a = 1;
 
@@ -83,8 +91,15 @@ var_dump(--$a); //prints 1;
 
 $x = true; $y = false; $z = true;
 
+// logical and, or, negation
+
 var_dump($x && $y);
 var_dump($x && $z);
+
+$a = 3; $b = 5; $c = 7;
+
+var_dump(($a < $b) && ($b < $c) && ($c < $a));
+
 
 var_dump($x || $y);
 var_dump($x || $z);
@@ -101,6 +116,21 @@ $str1 .= $str2; // means $str1 = $str1 . $str2 - concatenation
 // 7. Array Operators
 
 $fruits1 = [
+    "apple", 
+    "orange", 
+    "mango"
+];
+$fruits2 = [
+    "jackfruit", 
+    "papaya", 
+    "mango"
+];
+
+$allFruits = $fruits1 + $fruits2;
+
+var_dump($allFruits);
+
+$fruits1 = [
     0 => "apple", 
     1 => "orange", 
     2 => "mango"
@@ -108,12 +138,12 @@ $fruits1 = [
 $fruits2 = [
     3 => "jackfruit", 
     4 => "papaya", 
-    5 => "guava"
+    5 => "mango"
 ];
 
 $allFruits = $fruits1 + $fruits2;
 
-var_dump($allFruits);
+var_dump(array_unique($allFruits));
 
 /*
 == equality: same values
@@ -146,4 +176,6 @@ echo 12*6%4, "<br>"; // 0 or 24
 echo 12+6%4, "<br>"; // 0 or 14
 
 // the precedence order is:  **, /, *, %, +, -;
+
+
 
