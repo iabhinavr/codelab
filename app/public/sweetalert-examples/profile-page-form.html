@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile</title>
+
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
+</head>
+<body class="dark-mode">
+
+    <div class="container my-5">
+        <h1 class="mb-4">My Profile</h1>
+
+        <form>
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="name" value="John Doe">
+            </div>
+
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" value="john@example.com">
+            </div>
+
+            <div class="mb-3">
+                <label for="subscriptionStatus" class="form-label">Subscription Status</label>
+                <select class="form-select" id="subscriptionStatus">
+                    <option value="premium" selected>Premium</option>
+                    <option value="free">Free</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="bio" class="form-label">Bio</label>
+                <textarea class="form-control" id="bio" rows="4">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</textarea>
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <button id="delete-account" type="button" class="btn btn-danger">Delete Account</button>
+                <button id="save-changes" type="submit" class="btn btn-primary">Save Changes</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Include Bootstrap JS (Optional) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./js/dist/profile-page-form.js"></script>
+</body>
+</html>

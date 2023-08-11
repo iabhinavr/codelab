@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS Alerts</title>
+</head>
+<body>
+    <button id="show-alert">Show Alert</button>
+    <button id="show-confirm">Ask Confirmation</button>
+    <button id="show-prompt">Show Prompt</button>
+
+    <script>
+        const showAlert = document.getElementById('show-alert');
+
+        showAlertOnClick = () => {
+            alert("Hello World!");
+        }
+
+        showAlert.addEventListener('click', showAlertOnClick);
+
+        const showConfirm = document.getElementById('show-confirm');
+
+        showConfirmOnClick = () => {
+            let confirmation = confirm("Are you sure you want to continue?");
+            console.log(confirmation);
+        }
+
+        showConfirm.addEventListener('click', showConfirmOnClick);
+
+        const showPrompt = document.getElementById('show-prompt');
+
+        showPromptOnClick = () => {
+            let myName = prompt("Enter your name");
+            console.log(myName);
+        }
+
+        showPrompt.addEventListener('click', showPromptOnClick);
+
+    </script>
+</body>
+</html>
